@@ -713,7 +713,7 @@ class TFGenerationMixin:
         accepts_attention_mask = "attention_mask" in set(inspect.signature(self.call).parameters.keys())
         if accepts_attention_mask:
 #             if (attention_mask is None) and (pad_token_id is not None) and (pad_token_id in input_ids.numpy()):
-            if (attention_mask is None) and (pad_token_id is not None) and (pad_token_id in tf.make_ndarray(tf.make_tensor_proto(input_ids))):
+            if (attention_mask is None) and (pad_token_id is not None) # and (pad_token_id in tf.make_ndarray(tf.make_tensor_proto(input_ids))):
                 attention_mask = tf.cast(tf.math.not_equal(input_ids, pad_token_id), dtype=tf.int32)
             elif attention_mask is None:
                 attention_mask = tf.ones(shape_list(input_ids)[:2], dtype=tf.int32)
